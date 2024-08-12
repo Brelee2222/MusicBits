@@ -1,7 +1,7 @@
-import { NoteBeat } from "../NoteBeat";
-import { Note } from "../types";
+import { NoteBeat } from "../../NoteBeat";
+import { Note } from "../../types";
 
-export class QuaverNote extends NoteBeat {
+export class DottedQuaverNote extends NoteBeat {
     readonly beats : number;
     readonly quavers : number;
 

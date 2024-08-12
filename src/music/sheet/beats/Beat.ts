@@ -1,4 +1,4 @@
-abstract class Beat {
-    abstract readonly beats : number;
-    abstract readonly dotted : boolean;
+export interface Beat {
+    readonly beats : number;
+    readonly dotted : boolean;
 }
