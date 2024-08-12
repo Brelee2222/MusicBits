@@ -1,0 +1,1 @@
+export type Accidental = "flat" | "sharp" | "natural" | "none";

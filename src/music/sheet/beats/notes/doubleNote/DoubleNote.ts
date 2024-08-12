@@ -1,8 +1,8 @@
 import { Note } from "../Note";
 import { Accidental } from "../types";
 
-export class QuarterNote extends Note {
-    beats = 1/4;
+export class DoubleNote extends Note {
+    beats = 2;
 
     pitch: number;
     accidental: Accidental;
