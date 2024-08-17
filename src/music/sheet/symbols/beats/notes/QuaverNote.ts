@@ -1,17 +1,9 @@
 import { NoteBeat } from "./NoteBeat";
-import { Note } from "./types";
 
-// 
+// Quaver Note with 0 quavers can be treated as a crotchet note.
 
 export class QuaverNote extends NoteBeat {
-    readonly beats : number;
-    readonly quavers : number;
-    beamGroup : QuaverNote[] = [];
+    beam? : QuaverNote[];
 
-    constructor(dotted : boolean, quavers : number, staccato : boolean, notes : Note[]) {
-        super(dotted, staccato, notes);
-        this.quavers = quavers;
-
-        this.beats = 1/(4 << quavers);
-    }
+    beats = 1/(1 << this.data.value);
 }

@@ -1,13 +1,7 @@
-import { Rest } from "./Rest";
+import { RestBeat } from "./RestBeat";
 
-export class QuaverRest extends Rest {
-    readonly beats : number;
-    readonly quavers : number;
+// Quaver rest with 0 quavers can be treated as a crotchet rest.
 
-    constructor(dotted : boolean, quavers : number) {
-        super(dotted);
-
-        this.quavers = quavers;
-        this.beats = 1/(4 << quavers);
-    }
+export class QuaverRest extends RestBeat {
+    beats = 1 / (1 << this.data.value);
 }

@@ -1,6 +1,12 @@
 import { MusicalSymbol } from "../MusicalSymbol";
+import { BeatData, NoteData } from "./types";
 
-export interface Beat extends MusicalSymbol {
-    getBeats() : number;
-    readonly dotted : boolean;
+export abstract class Beat implements MusicalSymbol {    
+    readonly data : NoteData | BeatData;
+
+    constructor(data : NoteData | BeatData) {
+        this.data = data;
+    }
+
+    abstract readonly beats : number;
 }
