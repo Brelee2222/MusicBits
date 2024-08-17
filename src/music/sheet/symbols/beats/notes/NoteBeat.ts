@@ -5,12 +5,12 @@ export abstract class NoteBeat implements Beat {
     abstract readonly beats: number;
     readonly dotted: boolean;
 
-    note: Note;
+    notes: Note[];
     staccato: boolean;
 
-    constructor(dotted : boolean, staccato : boolean, note : Note) {
+    constructor(dotted : boolean, staccato : boolean, notes : Note[]) {
         this.dotted = dotted;
-        this.note = note;
+        this.notes = notes;
         this.staccato = staccato;
     }
 }
