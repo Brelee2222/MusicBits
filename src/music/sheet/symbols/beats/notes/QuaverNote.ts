@@ -1,9 +1,12 @@
 import { NoteBeat } from "./NoteBeat";
 import { Note } from "./types";
 
+// 
+
 export class QuaverNote extends NoteBeat {
     readonly beats : number;
     readonly quavers : number;
+    beamGroup : QuaverNote[] = [];
 
     constructor(dotted : boolean, quavers : number, staccato : boolean, notes : Note[]) {
         super(dotted, staccato, notes);

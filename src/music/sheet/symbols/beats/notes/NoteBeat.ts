@@ -4,6 +4,7 @@ import { Note } from "./types";
 export abstract class NoteBeat implements Beat {
     abstract readonly beats: number;
     readonly dotted: boolean;
+    tie? : NoteBeat;
 
     notes: Note[];
     staccato: boolean;
