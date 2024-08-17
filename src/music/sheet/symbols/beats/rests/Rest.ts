@@ -7,4 +7,8 @@ export abstract class Rest implements Beat {
     constructor(dotted : boolean) {
         this.dotted = dotted;
     }
+
+    getBeats(): number {
+        return this.dotted ? this.beats * 1.5 : this.beats;
+    }
 }

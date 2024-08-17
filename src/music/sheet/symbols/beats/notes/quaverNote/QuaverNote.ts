@@ -5,8 +5,8 @@ export class QuaverNote extends NoteBeat {
     readonly beats : number;
     readonly quavers : number;
 
-    constructor(dotted : boolean, staccato : boolean, note : Note, quavers : number) {
-        super(dotted, staccato, note);
+    constructor(dotted : boolean, staccato : boolean, notes : Note[], quavers : number) {
+        super(dotted, staccato, notes);
         this.quavers = quavers;
 
         this.beats = 1/(4 << quavers);

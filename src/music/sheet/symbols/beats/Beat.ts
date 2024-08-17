@@ -1,6 +1,6 @@
 import { MusicalSymbol } from "../MusicalSymbol";
 
 export interface Beat extends MusicalSymbol {
-    readonly beats : number;
+    getBeats() : number;
     readonly dotted : boolean;
 }

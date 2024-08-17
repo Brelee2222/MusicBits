@@ -1,4 +1,4 @@
 export interface MusicalSymbol {
     // getWidth() : number;
-    // getSymbol() : string; // TODO: Change to some image type
+    // getSymbol() : Sprite; // TODO: Change to some image type
 }

@@ -10,7 +10,12 @@ export abstract class NoteBeat implements Beat {
 
     constructor(dotted : boolean, staccato : boolean, notes : Note[]) {
         this.dotted = dotted;
+        
         this.notes = notes;
         this.staccato = staccato;
+    }
+
+    getBeats(): number {
+        return this.dotted ? this.beats * 1.5 : this.beats;
     }
 }
