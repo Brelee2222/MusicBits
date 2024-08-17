@@ -1,2 +1,4 @@
-class Clef implements MusicalSymbol {
+import { MusicalSymbol } from "./MusicalSymbol";
+
+export class Clef implements MusicalSymbol {
 }
