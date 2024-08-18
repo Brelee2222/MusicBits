@@ -13,25 +13,25 @@ import { CrotchetRest } from "./rests/CrotchetRest";
 import { QuaverRest } from "./rests/QuaverRest";
 import { RestBeat } from "./rests/RestBeat";
 
-export * as data from "./beatData";
-export * as note from "./notes/types";
+export * from "./beatData";
+export * from "./notes/types";
 
-export { Beat } from "./Beat";
-export { NoteBeat };
-export { RestBeat };
+export * from "./Beat";
+export * from "./notes/NoteBeat";
+export * from "./rests/RestBeat";
 
-export const noteTypes : { [index : string] : typeof NoteBeat } = { 
+export const noteTypes = { 
     BreveNote,
     SemiBreveNote,
     MinmNote,
     CrotchetNote,
     QuaverNote
-};
+} satisfies {[index: string] : typeof NoteBeat};
 
-export const restTypes : { [index : string] : typeof RestBeat } = {
+export const restTypes = {
     BreveRest,
     SemiBreveRest,
     MinmRest,
     CrotchetRest,
     QuaverRest
-};
+} satisfies {[index: string] : typeof RestBeat};
