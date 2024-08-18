@@ -3,14 +3,15 @@ import { SemiBreveNote } from "./notes/SemiBreveNote";
 import { MinmNote } from "./notes/MinmNote";
 import { CrotchetNote } from "./notes/CrotchetNote";
 import { QuaverNote } from "./notes/QuaverNote";
-import { RestBeat } from "./rests/RestBeat";
+import { NoteBeat } from "./notes/NoteBeat";
+
 
 import { BreveRest } from "./rests/BreveRest";
 import { SemiBreveRest } from "./rests/SemiBreveRest";
 import { MinmRest } from "./rests/MinmRest";
 import { CrotchetRest } from "./rests/CrotchetRest";
 import { QuaverRest } from "./rests/QuaverRest";
-import { NoteBeat } from "./notes/NoteBeat";
+import { RestBeat } from "./rests/RestBeat";
 
 export * as data from "./beatData";
 export * as note from "./notes/types";
