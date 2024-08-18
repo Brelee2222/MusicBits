@@ -1,4 +1,4 @@
-import { MusicalSymbol } from "../MusicalSymbol";
+import type { MusicalSymbol } from "../MusicalSymbol";
 
 export interface TimeSignature extends MusicalSymbol {
     readonly overhand : number;

@@ -1,4 +1,4 @@
-import { MusicalSymbol } from "./MusicalSymbol";
+import type { MusicalSymbol } from "./MusicalSymbol";
 
 export class Measure {
     id : string = "";

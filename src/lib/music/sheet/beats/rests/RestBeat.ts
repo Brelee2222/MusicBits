@@ -1,6 +1,6 @@
 import { Beat } from "../Beat";
-import { BeatData } from "../beatData";
+import type { BeatData } from "../beatData";
 
 export abstract class RestBeat extends Beat {
-    readonly data! : BeatData;
+    declare readonly data : BeatData;
 }

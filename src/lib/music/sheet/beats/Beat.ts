@@ -1,5 +1,5 @@
-import { MusicalSymbol } from "../MusicalSymbol";
-import { BeatData, NoteData } from "./beatData";
+import type { MusicalSymbol } from "../MusicalSymbol";
+import type { BeatData, NoteData } from "./beatData";
 
 export abstract class Beat implements MusicalSymbol {
     readonly data : NoteData | BeatData;

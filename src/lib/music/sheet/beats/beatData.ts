@@ -1,5 +1,5 @@
 import { NoteBeat } from "./notes/NoteBeat";
-import { Note } from "./notes/types";
+import type { Note } from "./notes/types";
 
 export type BeatData = {
     readonly delay : number;
