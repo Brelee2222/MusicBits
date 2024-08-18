@@ -1,5 +1,5 @@
 import { NoteBeat } from "./NoteBeat";
 
 export class SemiBreveNote extends NoteBeat {
-    beats = 4;
+    readonly beats = 4;
 }
