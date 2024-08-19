@@ -6,7 +6,18 @@
 
     const note = NoteBeat.makeBeat<CrotchetNote>(CrotchetNote, {
         "dotted" : false,
-        "notes" : [],
+        "notes" : [
+            {
+                "letter" : "A",
+                "accidental" : "none",
+                "octave" : 0
+            },
+            {
+                "letter" : "B",
+                "accidental" : "none",
+                "octave" : 0
+            }
+        ],
         "staccato" : false,
         "value" : 0
     });
