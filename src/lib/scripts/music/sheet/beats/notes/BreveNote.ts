@@ -4,4 +4,5 @@ import { NoteBeat } from "./NoteBeat";
 
 export class BreveNote extends NoteBeat {
     readonly beats : number = 4 << this.data.value;
+    readonly showStem: boolean = false;
 }

@@ -8,8 +8,8 @@ export abstract class Beat implements MusicalSymbol {
         this.data = data;
     }
 
-    static makeBeat<T extends Beat>(BeatType : T, data : NoteData) : T {
-        return new (BeatType as any)(data) as T;
+    static makeBeat<T extends Beat>(BeatConstructor : new (data : NoteData | BeatData) => T, data : NoteData | BeatData) : T {
+        return new BeatConstructor(data);
     }
 
     abstract readonly beats : number;

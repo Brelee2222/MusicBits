@@ -2,8 +2,7 @@ import { NoteBeat } from "./notes/NoteBeat";
 import type { Note } from "./notes/types";
 
 export type BeatData = {
-    readonly delay : number;
-    readonly dotted : number;
+    readonly dotted : boolean;
     readonly value : number; // Quavers or Breves
 }
 
