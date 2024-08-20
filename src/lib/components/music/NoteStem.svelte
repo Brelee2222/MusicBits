@@ -21,7 +21,8 @@
 
 <g id="stem">
     {#if noteBeat.showStem}
-        <line x1=".05" y1=".568" x2=".05" y2="5" stroke="black" stroke-width="0.1"/>
+        <!-- line is a bit off -->
+        <line x1=".1" y1="1.136" x2=".1" y2="10" stroke="black" stroke-width="0.2"/>
     {/if}
     <g id="notes"></g>
 </g>

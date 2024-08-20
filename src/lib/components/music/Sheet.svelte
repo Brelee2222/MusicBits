@@ -7,11 +7,11 @@
         "dotted" : false,
         "notes" : [
             {
-                "pitch" : 1,
+                "pitch" : 0,
                 "accidental" : "natural",
             },
             {
-                "pitch" : 0,
+                "pitch" : 2,
                 "accidental" : "natural",
             }
         ],
@@ -20,15 +20,15 @@
     });
 </script>
 <template id="genericNote">
-    <image href="/notes/genericNote.svg" height="1"/>
+    <image href="/notes/minmNote.svg" height="2.1"/>
 </template>
-<svg width="500px" height="500px" viewBox="0 0 10 10">
+<svg width="500px" height="500px" viewBox="0 0 20 20">
 
-    <pattern id="staffs" width="1" height="1" patternUnits="userSpaceOnUse">
-        <line x1="0" y1="0.5" x2="1000" y2="0.5" stroke="black" stroke-width="0.1"/>
+    <pattern id="staffs" width="2" height="2" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0.05" x2="1000" y2="0.05" stroke="black" stroke-width="0.1"/>
     </pattern>
 
-    <rect width="4" height="4" fill="url(#staffs)"/>
+    <rect width="10" height="10" fill="url(#staffs)"/>
 
     <NoteStem noteBeat={note}></NoteStem>
 </svg>
