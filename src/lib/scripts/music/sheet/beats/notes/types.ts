@@ -1,9 +1,8 @@
-type Accidental = "flat" | "sharp" | "natural" | "none";
+type Accidental = "flat" | "sharp" | "natural";
 
-type NoteLetter = "A" | "B" | "C" | "D" | "E" | "F" | "G";
+type NotePitch = number;
 
 export type Note = {
-    letter : NoteLetter,
+    pitch : NotePitch,
     accidental : Accidental,
-    octave : number
 };

@@ -35,3 +35,13 @@ export const restTypes = {
     CrotchetRest,
     QuaverRest
 } satisfies {[index: string] : typeof RestBeat};
+
+export const NoteLetters = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G"
+];
