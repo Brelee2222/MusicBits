@@ -13,4 +13,7 @@ export abstract class Beat implements MusicalSymbol {
     }
 
     abstract readonly beats : number;
+
+    abstract getWidth() : number;
+    abstract getSVGPath(): string;
 }

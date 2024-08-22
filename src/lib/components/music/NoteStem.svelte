@@ -4,31 +4,49 @@
 
     export let noteBeat : NoteBeat;
 
+    export let stemId : `stem${number}`;
+
     function renderNotes() {
+        const noteSVGPath = noteBeat.getSVGPath();
+        const noteWidth = noteBeat.getWidth();
+
         let lastPitch = NaN;
+        const notesElement = document.querySelector(`#${stemId} #notes`);
         noteBeat.data.notes.forEach(note => {
-            const notesElement = document.getElementById("notes");
+            const noteDocumentFragment = (document.querySelector("#genericNoteSVG") as HTMLTemplateElement).content.cloneNode(true) as DocumentFragment;
+            const noteElement = noteDocumentFragment.firstElementChild as unknown as SVGImageElement;
 
-            const noteElement = (document.querySelector("#genericNote") as HTMLTemplateElement).content.cloneNode(true) as DocumentFragment;
+            noteElement.setAttribute("href", noteSVGPath);
 
-            noteElement.firstElementChild?.setAttribute("y", `${11 - note.pitch}`);
+            // bottom staff - pitch * 10
+            noteElement.setAttribute("y", `${100 - note.pitch * 10}`);
             
-            if(lastPitch+1 == note.pitch)
-                noteElement.firstElementChild?.setAttribute("x", "2.4507775");
+            if(lastPitch + 1 == note.pitch)
+                noteElement.setAttribute("x", `${noteWidth - 2}`);
             else
                 lastPitch = note.pitch;
 
-            notesElement?.appendChild(noteElement);
+            notesElement?.appendChild(noteDocumentFragment);
         });
+
+        if(noteBeat.showStem) {
+            const stemLine = document.querySelector(`#${stemId} #stemLine`) as unknown as SVGLineElement;
+
+            stemLine.setAttribute("y1", "0");
+
+            if(noteBeat.data.notes.length > 1)
+                stemLine.setAttribute("y2", `${108.64 - noteBeat.data.notes[0].pitch * 10}`);
+            else
+                stemLine.setAttribute("y2", `${111.36 - noteBeat.data.notes[0].pitch * 10}`);
+        }
     }
 
     onMount(renderNotes);
 </script>
 
-<g id="stem">
+<g id={stemId}>
     {#if noteBeat.showStem}
-        <!-- line is a bit off -->
-        <line id="stemLine" x1="2.5507775" y1="1.136" x2="2.5507775" y2="10.636" stroke="black" stroke-width="0.2"/>
+        <line id="stemLine" x1="25.458" y1="0" x2="25.458" y2="0" stroke="black" stroke-width="2"/>
     {/if}
     <g id="notes"/>
 </g>
