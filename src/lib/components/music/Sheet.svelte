@@ -7,11 +7,23 @@
         "dotted" : false,
         "notes" : [
             {
-                "pitch" : 0,
+                "pitch" : 1,
                 "accidental" : "natural",
             },
             {
                 "pitch" : 2,
+                "accidental" : "natural",
+            },
+            {
+                "pitch" : 3,
+                "accidental" : "natural",
+            },
+            {
+                "pitch" : 4,
+                "accidental" : "natural",
+            },
+            {
+                "pitch" : 6,
                 "accidental" : "natural",
             }
         ],
@@ -20,7 +32,7 @@
     });
 </script>
 <template id="genericNote">
-    <image href="/notes/minmNote.svg" height="2.1"/>
+    <image href="/notes/genericNote.svg" height="2.1"/>
 </template>
 <svg width="500px" height="500px" viewBox="0 0 20 20">
 
