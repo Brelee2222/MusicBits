@@ -1,4 +1,4 @@
-export const GENERIC_NOTE_DIMENSIONS : {WIDTH: number, HEIGHT: number} = {
+export const GENERIC_NOTE_DIMENSIONS : { readonly WIDTH: number, readonly HEIGHT: number } = {
     WIDTH: 26.508,
     HEIGHT: 21
 };

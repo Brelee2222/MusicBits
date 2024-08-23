@@ -1,14 +1,13 @@
 <script lang="ts">
     import { NoteBeat } from "$lib/scripts/music/sheet/beats";
 	import NoteStem from "./NoteStem.svelte";
-	import { MinmNote } from "$lib/scripts/music/sheet/beats/notes/MinmNote";
 	import { CrotchetNote } from "$lib/scripts/music/sheet/beats/notes/CrotchetNote";
 
     const note = NoteBeat.makeBeat<CrotchetNote>(CrotchetNote, {
         "dotted" : false,
         "notes" : [
             {
-                "pitch" : 0,
+                "pitch" : 1,
                 "accidental" : "natural",
             },
             {

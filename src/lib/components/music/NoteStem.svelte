@@ -2,6 +2,8 @@
     import { onMount } from "svelte";
     import { NoteBeat } from "$lib/scripts/music/sheet/beats";
 
+    const NOTE_HEIGHT = 21;
+
     export let noteBeat : NoteBeat;
 
     export let stemId : `stem${number}`;
@@ -10,11 +12,11 @@
 
     function renderNotes() {
         const notes = noteBeat.data.notes;
-
-        const noteSVGPath = noteBeat.getSVGPath();
-
+        
         const noteWidth = noteBeat.getWidth();
         const noteHeight = noteBeat.getHeight();
+
+        const noteSVGPath = noteBeat.getSVGPath();
 
         const notesElement = document.querySelector(`#${stemId} #notes`) as SVGLineElement;
 
@@ -25,11 +27,12 @@
             const noteElement = document.createElementNS("http://www.w3.org/2000/svg", "image") as SVGImageElement;
             
             noteElement.setAttribute("href", noteSVGPath);
-            noteElement.setAttribute("width", `${noteWidth}`);
-            // noteElement.setAttribute("height", `${noteHeight}`);
+            noteElement.setAttribute("height", `${noteHeight}`);
 
             // bottom staff - pitch * 10
-            noteElement.setAttribute("y", `${note.pitch * -10}`);
+            noteElement.setAttribute("y", `${note.pitch * - 10}`);
+
+
             
             if(lastPitch + 1 == note.pitch) {
                 stackNotes = true;
