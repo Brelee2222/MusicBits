@@ -2,18 +2,21 @@
     import { onMount } from "svelte";
     import { NoteBeat } from "$lib/scripts/music/sheet/beats";
 	import { STEM_CONNECTION_Y } from "$lib/scripts/music/sheet/beats/notes/consts";
-
-    const LINE_WIDTH = 2;
+	import { STAFF_SIZE, STEM_LINE_WIDTH } from "./consts";
 
     export let noteBeat : NoteBeat;
 
     export let stemId : `stem${number}`;
 
-    export let stemEnd : number = -100;
+    export let stemEnd : number = 100;
 
-    function renderNotes() {
+    let stackNotes : boolean = false;
+    let connectionTop : number;
+    let connectionBottom : number;
+
+    function renderNotes() {       
         const notes = noteBeat.data.notes;
-        
+
         const noteWidth = noteBeat.getWidth();
         const noteHeight = noteBeat.getHeight();
 
@@ -21,53 +24,65 @@
 
         const notesElement = document.querySelector(`#${stemId} #notes`) as SVGLineElement;
 
-        let lastPitch = NaN;
-        let stackNotes = false;
+        stackNotes = false;
 
+        let lastUnstackedPitch = NaN;
         notes.forEach(note => {
             const noteElement = document.createElementNS("http://www.w3.org/2000/svg", "image") as SVGImageElement;
             
+            noteElement.classList.add("note");
+
             noteElement.setAttribute("href", noteSVGPath);
             noteElement.setAttribute("height", `${noteHeight}`);
 
-            // bottom staff - pitch * 10
-            noteElement.setAttribute("y", `${note.pitch * - 10}`);
+            noteElement.setAttribute("y", `${note.pitch * - STAFF_SIZE}`);
 
-
+            let noteX : number = 0;
             
-            if(lastPitch + 1 == note.pitch) {
+            if(lastUnstackedPitch + 1 == note.pitch) {
                 stackNotes = true;
-                noteElement.setAttribute("x", `${noteWidth - LINE_WIDTH}`);
+                noteX = noteWidth - STEM_LINE_WIDTH;
             } else
-                lastPitch = note.pitch;
+                lastUnstackedPitch = note.pitch;
+
+            noteElement.setAttribute("x", `${noteX}`);
 
             notesElement.appendChild(noteElement);
         });
 
-        if(noteBeat.showStem) {
-            const stemLine = document.querySelector(`#${stemId} #stemLine`) as unknown as SVGLineElement;
+        connectionBottom = STEM_CONNECTION_Y - notes[0].pitch * STAFF_SIZE;
+        connectionTop = (notes[notes.length-1].pitch != lastUnstackedPitch ? noteHeight - STEM_CONNECTION_Y : STEM_CONNECTION_Y) - notes[notes.length-1].pitch * STAFF_SIZE;
+    }
 
-            stemLine.setAttribute("y1", `${Math.max(
-                STEM_CONNECTION_Y - notes[0].pitch * 10, // stemMax
-                stemEnd
-            )}`);
+    function renderStemLine() {
+        if(!noteBeat.showStem)
+            return;
 
-            stemLine.setAttribute("y2", `${Math.min(
-                STEM_CONNECTION_Y - notes[notes.length-1].pitch * 10, // stemMin
-                stemEnd
-            )}`);
+        const noteWidth = noteBeat.getWidth();
 
-            stemLine.setAttribute("x1", `${noteWidth - LINE_WIDTH/2}`);
-            stemLine.setAttribute("x2", `${noteWidth - LINE_WIDTH/2}`);
-        }
+        const stemLine = document.querySelector(`#${stemId} #stemLine`) as unknown as SVGLineElement;
+
+        let lineX : number;
+
+        if(connectionBottom < stemEnd && !stackNotes)
+            lineX = STEM_LINE_WIDTH/2;
+        else
+            lineX = noteWidth - STEM_LINE_WIDTH/2;
+
+        stemLine.setAttribute("x1", `${lineX}`);
+        stemLine.setAttribute("x2", `${lineX}`);
+
+        stemLine.setAttribute("y1", `${Math.max(connectionBottom, stemEnd)}`);
+        stemLine.setAttribute("y2", `${Math.min(connectionTop, stemEnd)}`);
     }
 
     onMount(renderNotes);
+    onMount(renderStemLine);
 </script>
 
-<g id={stemId} stroke="black" >
+<g id={stemId} stroke="black">
     {#if noteBeat.showStem}
-        <line id="stemLine" stroke-width={LINE_WIDTH}/>
+        <line id="stemLine" stroke-width={STEM_LINE_WIDTH}/>
     {/if}
     <g id="notes"/>
 </g>

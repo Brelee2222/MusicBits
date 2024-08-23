@@ -7,15 +7,31 @@
         "dotted" : false,
         "notes" : [
             {
-                "pitch" : 2,
+                "pitch" : 0,
                 "accidental" : "natural",
             },
+            // {
+            //     "pitch" : 1,
+            //     "accidental" : "natural",
+            // },
             {
                 "pitch" : 2,
                 "accidental" : "natural",
             },
             {
                 "pitch" : 4,
+                "accidental" : "natural",
+            },
+            // {
+            //     "pitch" : 5,
+            //     "accidental" : "natural",
+            // },
+            {
+                "pitch" : 7,
+                "accidental" : "natural",
+            },
+            {
+                "pitch" : 8,
                 "accidental" : "natural",
             }
         ],
