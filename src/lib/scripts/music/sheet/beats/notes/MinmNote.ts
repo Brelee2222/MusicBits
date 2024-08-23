@@ -1,4 +1,4 @@
-import { GENERIC_NOTE_DIMENSIONS, GENERIC_NOTE_SVG_PATH } from "./consts";
+import { GENERIC_NOTE_DIMENSIONS } from "./consts";
 import { NoteBeat } from "./NoteBeat";
 
 export class MinmNote extends NoteBeat {
@@ -13,6 +13,6 @@ export class MinmNote extends NoteBeat {
     }
 
     getSVGPath(): string {
-        return "/note/minmNote.svg";
+        return "/notes/minmNote.svg";
     }
 }

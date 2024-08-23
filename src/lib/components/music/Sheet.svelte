@@ -1,9 +1,9 @@
 <script lang="ts">
     import { NoteBeat } from "$lib/scripts/music/sheet/beats";
 	import NoteStem from "./NoteStem.svelte";
-	import { CrotchetNote } from "$lib/scripts/music/sheet/beats/notes/CrotchetNote";
+	import { MinmNote } from "$lib/scripts/music/sheet/beats/notes/MinmNote";
 
-    const note = NoteBeat.makeBeat<CrotchetNote>(CrotchetNote, {
+    const note = NoteBeat.makeBeat<MinmNote>(MinmNote, {
         "dotted" : false,
         "notes" : [
             {

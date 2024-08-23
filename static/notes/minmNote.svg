@@ -1,7 +1,7 @@
-<svg width="5.0491" height="4" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 50.491 40" xmlns="http://www.w3.org/2000/svg">
     <mask id="hole">
-        <rect x="0" y="4" width="6" height="4" fill="white"/>
-        <circle cx="2.52455" cy="6" r="2" transform-origin="2.52455 6" transform="scale(0.75, 0.7) skewX(-20)" fill="black"/>
+        <rect x="0" y="0" width="60" height="40" fill="white"/>
+        <circle cx="25.2455" cy="20" r="20" transform-origin="25.2455 20" transform="scale(0.75, 0.7) skewX(-20)" fill="black"/>
     </mask>
-    <circle cx="2.52455" cy="6" r="2" transform-origin="2.52455 6" transform="scale(1.25, 1) skewX(-8)" mask="url(#hole)"/>
+    <circle cx="25.2455" cy="20" r="20" transform-origin="25.2455 20" transform="scale(1.25, 1) skewX(-8)" mask="url(#hole)"/>
 </svg>

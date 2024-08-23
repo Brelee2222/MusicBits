@@ -1,8 +1,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { NoteBeat } from "$lib/scripts/music/sheet/beats";
+	import { STEM_CONNECTION_Y } from "$lib/scripts/music/sheet/beats/notes/consts";
 
-    const NOTE_HEIGHT = 21;
+    const LINE_WIDTH = 2;
 
     export let noteBeat : NoteBeat;
 
@@ -36,7 +37,7 @@
             
             if(lastPitch + 1 == note.pitch) {
                 stackNotes = true;
-                noteElement.setAttribute("x", `${noteWidth - 2}`);
+                noteElement.setAttribute("x", `${noteWidth - LINE_WIDTH}`);
             } else
                 lastPitch = note.pitch;
 
@@ -47,24 +48,26 @@
             const stemLine = document.querySelector(`#${stemId} #stemLine`) as unknown as SVGLineElement;
 
             stemLine.setAttribute("y1", `${Math.max(
-                8.64 - notes[0].pitch * 10, // stemMax
+                STEM_CONNECTION_Y - notes[0].pitch * 10, // stemMax
                 stemEnd
             )}`);
 
             stemLine.setAttribute("y2", `${Math.min(
-                8.64 - notes[notes.length-1].pitch * 10, // stemMin
+                STEM_CONNECTION_Y - notes[notes.length-1].pitch * 10, // stemMin
                 stemEnd
             )}`);
+
+            stemLine.setAttribute("x1", `${noteWidth - LINE_WIDTH/2}`);
+            stemLine.setAttribute("x2", `${noteWidth - LINE_WIDTH/2}`);
         }
     }
 
     onMount(renderNotes);
 </script>
 
-<g id={stemId}>
+<g id={stemId} stroke="black" >
     {#if noteBeat.showStem}
-        <line id="stemLine" x1="25.458" y1="0" x2="25.458" y2="0" stroke="black" stroke-width="2"/>
+        <line id="stemLine" stroke-width={LINE_WIDTH}/>
     {/if}
-
     <g id="notes"/>
 </g>
