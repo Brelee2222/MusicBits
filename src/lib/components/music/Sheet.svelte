@@ -7,7 +7,7 @@
         "dotted" : false,
         "notes" : [
             {
-                "pitch" : 1,
+                "pitch" : 2,
                 "accidental" : "natural",
             },
             {
