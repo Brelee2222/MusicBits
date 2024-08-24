@@ -7,33 +7,33 @@
         "dotted" : false,
         "notes" : [
             {
-                "pitch" : 0,
+                "pitch" : -10,
+                "accidental" : "natural",
+            },
+            {
+                "pitch" : -9,
                 "accidental" : "natural",
             },
             // {
-            //     "pitch" : 1,
+            //     "pitch" : 2,
             //     "accidental" : "natural",
             // },
-            {
-                "pitch" : 2,
-                "accidental" : "natural",
-            },
-            {
-                "pitch" : 4,
-                "accidental" : "natural",
-            },
+            // {
+            //     "pitch" : 4,
+            //     "accidental" : "natural",
+            // },
             // {
             //     "pitch" : 5,
             //     "accidental" : "natural",
             // },
-            {
-                "pitch" : 7,
-                "accidental" : "natural",
-            },
-            {
-                "pitch" : 8,
-                "accidental" : "natural",
-            }
+            // {
+            //     "pitch" : 7,
+            //     "accidental" : "natural",
+            // },
+            // {
+            //     "pitch" : 11,
+            //     "accidental" : "natural",
+            // }
         ],
         "staccato" : false,
         "value" : 0
