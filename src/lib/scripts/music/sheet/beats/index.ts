@@ -20,6 +20,8 @@ export * from "./Beat";
 export * from "./notes/NoteBeat";
 export * from "./rests/RestBeat";
 
+export * from "./types";
+
 export const noteTypes = { 
     BreveNote,
     SemiBreveNote,
