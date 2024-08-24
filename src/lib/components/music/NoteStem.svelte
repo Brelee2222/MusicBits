@@ -8,16 +8,9 @@
 
     export let beatID : BeatID;
 
-    export let stemEnd : number = -200;
-
-    export let x : number = 50;
-
     export let width : number = 0;
 
-    $: noteBeat, () => {
-        console.log("hi")
-    }
-
+    let stemEnd : number = -200;
     let stackNotes : boolean = false;
     let connectionTop : number;
     let connectionBottom : number;
@@ -86,7 +79,7 @@
 
         const leftOverhang = document.querySelector(`#${beatID} #leftOverhangStaffs`) as SVGRectElement;
 
-        leftOverhang.setAttribute("x", `${-OVERHANG_STAFF_MARGIN + xOffset}`);
+        leftOverhang.setAttribute("x", `${xOffset - OVERHANG_STAFF_MARGIN}`);
         leftOverhang.setAttribute("width", `${OVERHANG_STAFF_MARGIN * 2 + noteWidth}`);
 
         leftOverhang.setAttribute("y", `${leftOverhangTop + STAFF_SIZE + STAFF_LINE_WIDTH}`);
@@ -94,7 +87,7 @@
 
         const rightOverhang = document.querySelector(`#${beatID} #rightOverhangStaffs`) as SVGRectElement;
 
-        rightOverhang.setAttribute("x", `${noteWidth - STEM_LINE_WIDTH - OVERHANG_STAFF_MARGIN + xOffset}`);
+        rightOverhang.setAttribute("x", `${noteWidth - STEM_LINE_WIDTH + xOffset - OVERHANG_STAFF_MARGIN}`);
         rightOverhang.setAttribute("width", `${OVERHANG_STAFF_MARGIN * 2 + noteWidth}`);
 
         rightOverhang.setAttribute("y", `${rightOverhangTop + STAFF_SIZE + STAFF_LINE_WIDTH}`);
@@ -131,7 +124,7 @@
     onMount(renderStemLine);
 </script>
 
-<g transform="translate({x} 0)" id={beatID}>
+<g id={beatID}>
     {#if noteBeat.showStem}
         <line id="stemLine" stroke-width={STEM_LINE_WIDTH} stroke="black"/>
     {/if}
