@@ -4,24 +4,27 @@
 	import { OVERHANG_STAFF_MARGIN, STAFF_LINE_WIDTH, STAFF_SIZE, STEM_LINE_WIDTH, STEM_CONNECTION_Y } from "./consts";
 	import type { BeatID } from "$lib/scripts/music/sheet/beats/types";
 
-    export let noteBeat : NoteBeat;
+    export let beat : NoteBeat;
 
     export let beatID : BeatID;
 
     export let width : number = 0;
 
-    let stemEnd : number = -200;
+    export let x : number = 0;
+
+    export let stemEnd : number = -200;
+    
     let stackNotes : boolean = false;
     let connectionTop : number;
     let connectionBottom : number;
 
     function renderNotes() {
-        const notes = noteBeat.data.notes;
+        const notes = beat.data.notes;
 
         const
-            noteWidth = noteBeat.getWidth(),
-            noteHeight = noteBeat.getHeight(),
-            noteSVGPath = noteBeat.getSVGPath();
+            noteWidth = beat.getWidth(),
+            noteHeight = beat.getHeight(),
+            noteSVGPath = beat.getSVGPath();
 
         const xOffset = 0;
 
@@ -97,10 +100,10 @@
     }
 
     function renderStemLine() {
-        if(!noteBeat.showStem)
+        if(!beat.showStem)
             return;
 
-        const noteWidth = noteBeat.getWidth();
+        const noteWidth = beat.getWidth();
 
         const xOffset = 0;
 
@@ -124,8 +127,10 @@
     onMount(renderStemLine);
 </script>
 
-<g id={beatID}>
-    {#if noteBeat.showStem}
+<svelte:options accessors={true}/>
+
+<g id={beatID} transform="translate({x} 0)">
+    {#if beat.showStem}
         <line id="stemLine" stroke-width={STEM_LINE_WIDTH} stroke="black"/>
     {/if}
     <g id="notes"/>

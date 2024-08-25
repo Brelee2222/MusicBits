@@ -1,15 +1,13 @@
 <script lang="ts">
-    import { Beat, NoteBeat } from "$lib/scripts/music/sheet/beats";
+    import { NoteBeat } from "$lib/scripts/music/sheet/beats";
 	import { CrotchetNote } from "$lib/scripts/music/sheet/beats/notes/CrotchetNote";
 	import { onMount } from "svelte";
-	import NoteStem from "./NoteStem.svelte";
 	import { addBeat } from "$lib/scripts/music/sheet";
+	import NoteStemElement from "./NoteStemElement.svelte";
+	import { BeatElement } from "./types";
+	import RestElement from "./RestElement.svelte";
 
-    let beatInfos : {
-        beatID: `beat-${string}`;
-        beat: Beat;
-        width?: number;
-    }[] = [];
+    let beats : BeatElement[] = [];
 
     function makeBeat() {
         const beat = NoteBeat.makeBeat<CrotchetNote>(CrotchetNote, {
@@ -57,21 +55,21 @@
     function appendBeat() {
         const beatInfo = makeBeat();
         
-        beatInfos.push(beatInfo);
-        beatInfos = beatInfos;
+        beats.push(new (beatInfo.beat instanceof NoteBeat ? NoteStemElement : RestElement)({
+            target: document.getElementById("beats") as unknown as SVGGElement,
+            props: beatInfo
+        }));
     }
 
     function computePositions() {
         let x = 0;
 
-        const beatsElement = document.getElementById("beats");
+        for(let beatIndex = 0; beatIndex < beats.length; beatIndex++) {
+            const beat = beats[beatIndex];
 
-        for(let beatIndex = 0; beatIndex < beatInfos.length; beatIndex++) {
-            const beatInfo = beatInfos[beatIndex];
+            beat.x = x;
 
-            beatsElement?.children[beatIndex].setAttribute("transform", `translate(${x} 0)`);
-
-            x += beatInfo.width!;
+            x += beat.width!;
         }
     }
 
@@ -80,6 +78,7 @@
 
     onMount(() => setTimeout(computePositions, 2000));
 </script>
+
 <svg width="400px" height="400px" viewBox="-200 -200 400 400">
 
     <pattern id="staffs" y="10" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -88,15 +87,5 @@
 
     <rect y="-100" width="100" height="100" fill="url(#staffs)"/>
 
-    <g id="beats">
-        {#each beatInfos as beatInfo}
-            {#if beatInfo.beat instanceof NoteBeat}
-                <NoteStem 
-                    noteBeat={beatInfo.beat} 
-                    beatID={beatInfo.beatID} 
-                    bind:width={beatInfo.width} 
-                />
-            {/if}
-        {/each}
-    </g>
+    <g id="beats"/>
 </svg>
