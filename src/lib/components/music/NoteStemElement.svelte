@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { NoteBeat } from "$lib/scripts/music/sheet/beats";
-	import { OVERHANG_STAFF_MARGIN, STAFF_LINE_WIDTH, STAFF_SIZE, STEM_LINE_WIDTH, STEM_CONNECTION_Y } from "./consts";
+	import { OVERHANG_STAFF_MARGIN, STAFF_LINE_WIDTH, HALF_STAFF_SIZE, STEM_LINE_WIDTH, STEM_CONNECTION_Y } from "./consts";
 	import type { BeatID } from "$lib/scripts/music/sheet/beats/types";
 
     export let beat : NoteBeat;
@@ -35,10 +35,10 @@
         stackNotes = false; // Reset stack note
 
         let 
-            leftOverhangTop : number = - STAFF_SIZE,
-            leftOverhangBottom : number = - STAFF_SIZE,
-            rightOverhangTop : number = - STAFF_SIZE,
-            rightOverhangBottom : number = - STAFF_SIZE;
+            leftOverhangTop : number = - HALF_STAFF_SIZE,
+            leftOverhangBottom : number = - HALF_STAFF_SIZE,
+            rightOverhangTop : number = - HALF_STAFF_SIZE,
+            rightOverhangBottom : number = - HALF_STAFF_SIZE;
 
         let lastUnstackedPitch = NaN;
 
@@ -52,7 +52,7 @@
         notes.forEach(note => {
             const noteElement = noteElementTemplate.cloneNode() as SVGImageElement;
 
-            const y = note.pitch * - STAFF_SIZE;
+            const y = note.pitch * - HALF_STAFF_SIZE;
             noteElement.setAttribute("y", `${y}`);
 
             let noteX : number = 0;
@@ -77,15 +77,15 @@
             notesElement.appendChild(noteElement);
         });
 
-        connectionBottom = STEM_CONNECTION_Y - notes[0].pitch * STAFF_SIZE;
-        connectionTop = (notes[notes.length-1].pitch != lastUnstackedPitch || !stackNotes? noteHeight - STEM_CONNECTION_Y : STEM_CONNECTION_Y) - notes[notes.length-1].pitch * STAFF_SIZE;
+        connectionBottom = STEM_CONNECTION_Y - notes[0].pitch * HALF_STAFF_SIZE;
+        connectionTop = (notes[notes.length-1].pitch != lastUnstackedPitch || !stackNotes? noteHeight - STEM_CONNECTION_Y : STEM_CONNECTION_Y) - notes[notes.length-1].pitch * HALF_STAFF_SIZE;
 
         const leftOverhang = document.querySelector(`#${beatID} #leftOverhangStaffs`) as SVGRectElement;
 
         leftOverhang.setAttribute("x", `${xOffset - OVERHANG_STAFF_MARGIN}`);
         leftOverhang.setAttribute("width", `${OVERHANG_STAFF_MARGIN * 2 + noteWidth}`);
 
-        leftOverhang.setAttribute("y", `${leftOverhangTop + STAFF_SIZE + STAFF_LINE_WIDTH}`);
+        leftOverhang.setAttribute("y", `${leftOverhangTop + HALF_STAFF_SIZE + STAFF_LINE_WIDTH}`);
         leftOverhang.setAttribute("height", `${leftOverhangBottom - leftOverhangTop}`);
 
         const rightOverhang = document.querySelector(`#${beatID} #rightOverhangStaffs`) as SVGRectElement;
@@ -93,7 +93,7 @@
         rightOverhang.setAttribute("x", `${noteWidth - STEM_LINE_WIDTH + xOffset - OVERHANG_STAFF_MARGIN}`);
         rightOverhang.setAttribute("width", `${OVERHANG_STAFF_MARGIN * 2 + noteWidth}`);
 
-        rightOverhang.setAttribute("y", `${rightOverhangTop + STAFF_SIZE + STAFF_LINE_WIDTH}`);
+        rightOverhang.setAttribute("y", `${rightOverhangTop + HALF_STAFF_SIZE + STAFF_LINE_WIDTH}`);
         rightOverhang.setAttribute("height", `${rightOverhangBottom - rightOverhangTop}`);
 
         width = stackNotes ? noteWidth * 2 - STAFF_LINE_WIDTH : noteWidth;
