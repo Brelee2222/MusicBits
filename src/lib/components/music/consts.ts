@@ -6,3 +6,5 @@ export const HALF_STAFF_SIZE : number = 10;
 export const STAFF_LINE_WIDTH : number = 1;
 
 export const OVERHANG_STAFF_MARGIN : number = 7
+
+export const BEAT_ELEMENT_RIGHT_PADDING : number = 40;

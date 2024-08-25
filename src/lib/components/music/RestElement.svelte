@@ -1,11 +1,15 @@
 <script lang="ts">
-	import { BeatID, RestBeat } from "$lib/scripts/music/sheet/beats";
+	import type { RestBeat } from "$lib/scripts/music/sheet/beats";
+	import { BEAT_ELEMENT_RIGHT_PADDING } from "./consts";
 
     export let beat : RestBeat;
-
-    export let beatID : BeatID;
 
     export let width : number = 0;
 
     export let x : number = 0;
+
+    export let rightPadding : number = BEAT_ELEMENT_RIGHT_PADDING;
 </script>
+
+<svelte:options accessors={true}/>
+

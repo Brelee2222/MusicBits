@@ -2,12 +2,14 @@
     import { NoteBeat } from "$lib/scripts/music/sheet/beats";
 	import { CrotchetNote } from "$lib/scripts/music/sheet/beats/notes/CrotchetNote";
 	import { onMount } from "svelte";
-	import { addBeat } from "$lib/scripts/music/sheet";
+	import { Measure } from "$lib/scripts/music/sheet/Measure";
+	import type { BeatElement } from "./types";
 	import NoteStemElement from "./NoteStemElement.svelte";
-	import { BeatElement } from "./types";
 	import RestElement from "./RestElement.svelte";
 
-    let beats : BeatElement[] = [];
+    let measure : Measure = new Measure();
+
+    let beatElements : BeatElement[] = [];
 
     function makeBeat() {
         const beat = NoteBeat.makeBeat<CrotchetNote>(CrotchetNote, {
@@ -46,30 +48,29 @@
             "value" : 0
         });
 
-        return {
-            beatID : addBeat(beat),
-            beat
-        };
+        return beat;
     }
 
     function appendBeat() {
-        const beatInfo = makeBeat();
+        const beat = makeBeat();
         
-        beats.push(new (beatInfo.beat instanceof NoteBeat ? NoteStemElement : RestElement)({
-            target: document.getElementById("beats") as unknown as SVGGElement,
-            props: beatInfo
-        }));
+        beatElements[measure.beats.push(beat) - 1] = new (beat instanceof NoteBeat ? NoteStemElement : RestElement)({
+            props : {
+                beat
+            },
+            target : document.getElementById("beats") as unknown as SVGGElement
+        });
     }
 
     function computePositions() {
         let x = 0;
 
-        for(let beatIndex = 0; beatIndex < beats.length; beatIndex++) {
-            const beat = beats[beatIndex];
+        for(let beatIndex = 0; beatIndex < beatElements.length; beatIndex++) {
+            const beat = beatElements[beatIndex];
 
             beat.x = x;
 
-            x += beat.width!;
+            x += beat.width! + beat.rightPadding!;
         }
     }
 
@@ -79,8 +80,7 @@
     onMount(() => setTimeout(computePositions, 2000));
 </script>
 
-<svg width="400px" height="400px" viewBox="-200 -200 400 400">
-
+<svg width="400px" height="400px" viewBox="-200 -200 400 400" id="measure">
     <pattern id="staffs" y="10" width="20" height="20" patternUnits="userSpaceOnUse">
         <line x1="0" y1="0.5" x2="1000" y2="0.5" stroke="black" stroke-width="1"/>
     </pattern>

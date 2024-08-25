@@ -1,18 +1,17 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { NoteBeat } from "$lib/scripts/music/sheet/beats";
-	import { OVERHANG_STAFF_MARGIN, STAFF_LINE_WIDTH, HALF_STAFF_SIZE, STEM_LINE_WIDTH, STEM_CONNECTION_Y } from "./consts";
-	import type { BeatID } from "$lib/scripts/music/sheet/beats/types";
+	import { OVERHANG_STAFF_MARGIN, STAFF_LINE_WIDTH, HALF_STAFF_SIZE, STEM_LINE_WIDTH, STEM_CONNECTION_Y, BEAT_ELEMENT_RIGHT_PADDING } from "./consts";
+	import type { NoteBeat } from "$lib/scripts/music/sheet/beats";
 
     export let beat : NoteBeat;
-
-    export let beatID : BeatID;
 
     export let width : number = 0;
 
     export let x : number = 0;
 
     export let stemEnd : number = -200;
+
+    export let rightPadding : number = BEAT_ELEMENT_RIGHT_PADDING;
     
     let stackNotes : boolean = false;
     let connectionTop : number;
@@ -28,7 +27,7 @@
 
         const xOffset = 0;
 
-        const notesElement = document.querySelector(`#${beatID} #notes`) as SVGLineElement;
+        const notesElement = document.querySelector(`#${beat.beatID} #notes`) as SVGLineElement;
 
         notesElement.textContent = ""; // Clear current notes
 
@@ -80,7 +79,7 @@
         connectionBottom = STEM_CONNECTION_Y - notes[0].pitch * HALF_STAFF_SIZE;
         connectionTop = (notes[notes.length-1].pitch != lastUnstackedPitch || !stackNotes? noteHeight - STEM_CONNECTION_Y : STEM_CONNECTION_Y) - notes[notes.length-1].pitch * HALF_STAFF_SIZE;
 
-        const leftOverhang = document.querySelector(`#${beatID} #leftOverhangStaffs`) as SVGRectElement;
+        const leftOverhang = document.querySelector(`#${beat.beatID} #leftOverhangStaffs`) as SVGRectElement;
 
         leftOverhang.setAttribute("x", `${xOffset - OVERHANG_STAFF_MARGIN}`);
         leftOverhang.setAttribute("width", `${OVERHANG_STAFF_MARGIN * 2 + noteWidth}`);
@@ -88,7 +87,7 @@
         leftOverhang.setAttribute("y", `${leftOverhangTop + HALF_STAFF_SIZE + STAFF_LINE_WIDTH}`);
         leftOverhang.setAttribute("height", `${leftOverhangBottom - leftOverhangTop}`);
 
-        const rightOverhang = document.querySelector(`#${beatID} #rightOverhangStaffs`) as SVGRectElement;
+        const rightOverhang = document.querySelector(`#${beat.beatID} #rightOverhangStaffs`) as SVGRectElement;
 
         rightOverhang.setAttribute("x", `${noteWidth - STEM_LINE_WIDTH + xOffset - OVERHANG_STAFF_MARGIN}`);
         rightOverhang.setAttribute("width", `${OVERHANG_STAFF_MARGIN * 2 + noteWidth}`);
@@ -107,7 +106,7 @@
 
         const xOffset = 0;
 
-        const stemLine = document.querySelector(`#${beatID} #stemLine`) as unknown as SVGLineElement;
+        const stemLine = document.querySelector(`#${beat.beatID} #stemLine`) as unknown as SVGLineElement;
 
         let lineX : number;
 
@@ -129,7 +128,7 @@
 
 <svelte:options accessors={true}/>
 
-<g id={beatID} transform="translate({x} 0)">
+<g id={beat.beatID} transform="translate({x} 0)">
     {#if beat.showStem}
         <line id="stemLine" stroke-width={STEM_LINE_WIDTH} stroke="black"/>
     {/if}
