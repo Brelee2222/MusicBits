@@ -14,8 +14,6 @@ import { CrotchetRest } from "./rests/CrotchetRest";
 import { QuaverRest } from "./rests/QuaverRest";
 import { RestBeat } from "./rests/RestBeat";
 
-import type { BeatID } from "./types";
-
 export * from "./beatData";
 export * from "./notes/types";
 

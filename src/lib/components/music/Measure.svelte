@@ -1,20 +1,20 @@
 <script lang="ts">
-    import { Beat, NoteBeat, RestBeat } from "$lib/scripts/music/sheet/beats";
-	import { CrotchetNote } from "$lib/scripts/music/sheet/beats/notes/CrotchetNote";
+    import { Beat, NoteBeat, RestBeat, restTypes } from "$lib/scripts/music/sheet/beats";
 	import { onMount } from "svelte";
 	import { Measure } from "$lib/scripts/music/sheet/Measure";
 	import type { BeatElement } from "./types";
 	import NoteStemElement from "./NoteStemElement.svelte";
 	import RestElement from "./RestElement.svelte";
 	import { CLEFF_MIN_HEIGHT } from "./consts";
-	import { SemiBreveRest } from "$lib/scripts/music/sheet/beats/rests/SemiBreveRest";
 
     let measure : Measure = new Measure();
 
     let beatElements : BeatElement[] = [];
 
+    let measureID : string = "measure1";
+
     function makeBeat() : Beat {
-        const beat = NoteBeat.makeBeat<SemiBreveRest>(SemiBreveRest, {
+        const beat = NoteBeat.makeBeat(restTypes.MinmRest, {
             "dotted" : false,
             "notes" : [
                 {
@@ -84,20 +84,24 @@
 
             x += beat.width! + beat.rightPadding!;
         }
+
+        const measureElement = document.querySelector(`#${measureID}`) as SVGElement;
+        measureElement.setAttribute("width", `${x}`);
+        measureElement.setAttribute("viewBox", `0 -200 ${x} 400`);
     }
 
-    for(let i = 0; i != 3; i++)
+    for(let i = 0; i != 5; i++)
         onMount(appendBeat);
 
     onMount(() => setTimeout(computePositions, 2000));
 </script>
 
-<svg width="400px" height="400px" viewBox="-200 -200 400 400" id="measure">
-    <pattern id="staffs" y="10" width="20" height="20" patternUnits="userSpaceOnUse">
+<svg id={measureID} height="400px" preserveAspectRatio="xMinYMid meet">
+    <pattern id="staffsPattern" y="10" width="20" height="20" patternUnits="userSpaceOnUse">
         <line x1="0" y1="0.5" x2="1000" y2="0.5" stroke="black" stroke-width="1"/>
     </pattern>
 
-    <rect y="-100" width="100" height="{CLEFF_MIN_HEIGHT}" fill="url(#staffs)"/>
+    <rect id="staff" y="-100" width="100%" height="{CLEFF_MIN_HEIGHT}" fill="url(#staffsPattern)"/>
 
     <g id="beats"/>
 </svg>
