@@ -13,6 +13,6 @@ export class MinmNote extends NoteBeat {
     }
 
     getSVGPath(): string {
-        return "/notes/minmNote.svg";
+        return "/notes/MinmNote.svg";
     }
 }

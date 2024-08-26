@@ -1,18 +1,20 @@
 <script lang="ts">
-    import { NoteBeat } from "$lib/scripts/music/sheet/beats";
+    import { Beat, NoteBeat, RestBeat } from "$lib/scripts/music/sheet/beats";
 	import { CrotchetNote } from "$lib/scripts/music/sheet/beats/notes/CrotchetNote";
 	import { onMount } from "svelte";
 	import { Measure } from "$lib/scripts/music/sheet/Measure";
 	import type { BeatElement } from "./types";
 	import NoteStemElement from "./NoteStemElement.svelte";
 	import RestElement from "./RestElement.svelte";
+	import { CLEFF_MIN_HEIGHT } from "./consts";
+	import { SemiBreveRest } from "$lib/scripts/music/sheet/beats/rests/SemiBreveRest";
 
     let measure : Measure = new Measure();
 
     let beatElements : BeatElement[] = [];
 
-    function makeBeat() {
-        const beat = NoteBeat.makeBeat<CrotchetNote>(CrotchetNote, {
+    function makeBeat() : Beat {
+        const beat = NoteBeat.makeBeat<SemiBreveRest>(SemiBreveRest, {
             "dotted" : false,
             "notes" : [
                 {
@@ -53,13 +55,23 @@
 
     function appendBeat() {
         const beat = makeBeat();
-        
-        beatElements[measure.beats.push(beat) - 1] = new (beat instanceof NoteBeat ? NoteStemElement : RestElement)({
+        const options = {
             props : {
                 beat
             },
             target : document.getElementById("beats") as unknown as SVGGElement
-        });
+        };
+
+        let beatElement : BeatElement;
+
+        if(beat instanceof NoteBeat) // @ts-ignore
+            beatElement = new NoteStemElement(options);
+        else if(beat instanceof RestBeat)
+            beatElement = new RestElement(options);
+        else
+            throw new Error("Not a valid beat type");
+
+        beatElements[measure.beats.push(beat) - 1] = beatElement;
     }
 
     function computePositions() {
@@ -85,7 +97,7 @@
         <line x1="0" y1="0.5" x2="1000" y2="0.5" stroke="black" stroke-width="1"/>
     </pattern>
 
-    <rect y="-100" width="100" height="100" fill="url(#staffs)"/>
+    <rect y="-100" width="100" height="{CLEFF_MIN_HEIGHT}" fill="url(#staffs)"/>
 
     <g id="beats"/>
 </svg>

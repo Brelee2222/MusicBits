@@ -3,4 +3,4 @@ export const GENERIC_NOTE_DIMENSIONS : { readonly WIDTH: number, readonly HEIGHT
     HEIGHT: 21
 };
 
-export const GENERIC_NOTE_SVG_PATH : string = "/notes/genericNote.svg";
+export const GENERIC_NOTE_SVG_PATH : string = "/notes/GenericNote.svg";

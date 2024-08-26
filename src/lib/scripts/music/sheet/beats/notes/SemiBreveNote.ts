@@ -13,6 +13,6 @@ export class SemiBreveNote extends NoteBeat {
     }
 
     getSVGPath(): string {
-        return "/notes/semiBreveNote.svg";
+        return "/notes/SemiBreveNote.svg";
     }
 }
