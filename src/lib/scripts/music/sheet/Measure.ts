@@ -1,8 +1,9 @@
 import type { MusicalSymbol } from "./MusicalSymbol";
 import { Beat } from "./beats";
+import { MeasureID } from "./types";
 
 export class Measure {
-    id : string = "";
+    readonly measureID : MeasureID;
 
     symbols : MusicalSymbol[] = [];
 

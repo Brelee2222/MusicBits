@@ -1,6 +1,5 @@
 <script lang="ts">
     import { Beat, NoteBeat, RestBeat, restTypes } from "$lib/scripts/music/sheet/beats";
-	import { onMount } from "svelte";
 	import { Measure } from "$lib/scripts/music/sheet/Measure";
 	import type { BeatElement } from "./types";
 	import NoteStemElement from "./NoteStemElement.svelte";
@@ -10,8 +9,6 @@
     let measure : Measure = new Measure();
 
     let beatElements : BeatElement[] = [];
-
-    let measureID : string = "measure1";
 
     function makeBeat() : Beat {
         const beat = NoteBeat.makeBeat(restTypes.MinmRest, {
@@ -53,25 +50,29 @@
         return beat;
     }
 
-    function appendBeat() {
-        const beat = makeBeat();
-        const options = {
-            props : {
-                beat
-            },
-            target : document.getElementById("beats") as unknown as SVGGElement
-        };
+    function renderBeats() {
+        const beatsElement = document.getElementById("beats") as unknown as SVGGElement;
+        beatsElement.innerHTML = "";
 
-        let beatElement : BeatElement;
+        measure.beats.forEach(beat => {
+            const options = {
+                props : {
+                    beat
+                },
+                target : beatsElement
+            };
 
-        if(beat instanceof NoteBeat) // @ts-ignore
-            beatElement = new NoteStemElement(options);
-        else if(beat instanceof RestBeat)
-            beatElement = new RestElement(options);
-        else
-            throw new Error("Not a valid beat type");
+            let beatElement : BeatElement;
 
-        beatElements[measure.beats.push(beat) - 1] = beatElement;
+            if(beat instanceof NoteBeat) // @ts-ignore
+                beatElement = new NoteStemElement(options);
+            else if(beat instanceof RestBeat)
+                beatElement = new RestElement(options);
+            else
+                throw new Error("Not a valid beat type");
+
+            beatElements[measure.beats.push(beat) - 1] = beatElement;
+        });
     }
 
     function computePositions() {
@@ -85,18 +86,13 @@
             x += beat.width! + beat.rightPadding!;
         }
 
-        const measureElement = document.querySelector(`#${measureID}`) as SVGElement;
+        const measureElement = document.querySelector(`#${measure.measureID}`) as SVGElement;
         measureElement.setAttribute("width", `${x}`);
         measureElement.setAttribute("viewBox", `0 -200 ${x} 400`);
     }
-
-    for(let i = 0; i != 5; i++)
-        onMount(appendBeat);
-
-    onMount(() => setTimeout(computePositions, 2000));
 </script>
 
-<svg id={measureID} height="400px" preserveAspectRatio="xMinYMid meet">
+<svg id={measure.measureID} height="400px" preserveAspectRatio="xMinYMid meet">
     <pattern id="staffsPattern" y="10" width="20" height="20" patternUnits="userSpaceOnUse">
         <line x1="0" y1="0.5" x2="1000" y2="0.5" stroke="black" stroke-width="1"/>
     </pattern>
