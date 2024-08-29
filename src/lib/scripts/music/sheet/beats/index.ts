@@ -1,5 +1,3 @@
-import { Beat } from "./Beat";
-
 import { BreveNote } from "./notes/BreveNote";
 import { SemiBreveNote } from "./notes/SemiBreveNote";
 import { MinmNote } from "./notes/MinmNote";

@@ -1,6 +1,6 @@
 import type { MusicalSymbol } from "./MusicalSymbol";
 import { Beat } from "./beats";
-import { MeasureID } from "./types";
+import type { MeasureID } from "./types";
 
 export class Measure {
     readonly measureID : MeasureID;
