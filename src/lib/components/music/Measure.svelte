@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Beat, NoteBeat, RestBeat, restTypes } from "$lib/scripts/music/sheet/beats";
+    import { Beat, NoteBeat, RestBeat } from "$lib/scripts/music/sheet/beats";
 	import { Measure } from "$lib/scripts/music/sheet/Measure";
 	import type { BeatElement } from "./types";
 	import NoteStemElement from "./NoteStemElement.svelte";
@@ -10,44 +10,8 @@
 
     let beatElements : BeatElement[] = [];
 
-    function makeBeat() : Beat {
-        const beat = NoteBeat.makeBeat(restTypes.MinmRest, {
-            "dotted" : false,
-            "notes" : [
-                {
-                    "pitch" : 0,
-                    "accidental" : "natural",
-                },
-                {
-                    "pitch" : 2,
-                    "accidental" : "natural",
-                },
-                {
-                    "pitch" : 4,
-                    "accidental" : "natural",
-                },
-                // {
-                //     "pitch" : 4,
-                //     "accidental" : "natural",
-                // },
-                // {
-                //     "pitch" : 5,
-                //     "accidental" : "natural",
-                // },
-                // {
-                //     "pitch" : 7,
-                //     "accidental" : "natural",
-                // },
-                // {
-                //     "pitch" : 11,
-                //     "accidental" : "natural",
-                // }
-            ],
-            "staccato" : false,
-            "value" : 0
-        });
-
-        return beat;
+    function appendBeat(beat : Beat) {
+        measure.beats.push(beat);
     }
 
     function renderBeats() {
@@ -75,7 +39,7 @@
         });
     }
 
-    function computePositions() {
+    function computePositions() : number {
         let x = 0;
 
         for(let beatIndex = 0; beatIndex < beatElements.length; beatIndex++) {
@@ -89,6 +53,8 @@
         const measureElement = document.querySelector(`#${measure.measureID}`) as SVGElement;
         measureElement.setAttribute("width", `${x}`);
         measureElement.setAttribute("viewBox", `0 -200 ${x} 400`);
+
+        return x;
     }
 </script>
 
