@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { Beat, NoteBeat, RestBeat, restTypes } from "$lib/scripts/music/sheet/beats";
-	import { onMount } from "svelte";
+    import { Beat, NoteBeat, RestBeat } from "$lib/scripts/music/sheet/beats";
 	import { Measure } from "$lib/scripts/music/sheet/Measure";
 	import type { BeatElement } from "./types";
 	import NoteStemElement from "./NoteStemElement.svelte";
@@ -12,46 +11,6 @@
     let measureWidth : number = 0;
 
     export let measure : Measure;
-
-    export function makeBeat() : Beat {
-        const beat = NoteBeat.makeBeat(restTypes.MinmRest, {
-            "dotted" : false,
-            "notes" : [
-                {
-                    "pitch" : 0,
-                    "accidental" : "natural",
-                },
-                {
-                    "pitch" : 2,
-                    "accidental" : "natural",
-                },
-                {
-                    "pitch" : 4,
-                    "accidental" : "natural",
-                },
-                // {
-                //     "pitch" : 4,
-                //     "accidental" : "natural",
-                // },
-                // {
-                //     "pitch" : 5,
-                //     "accidental" : "natural",
-                // },
-                // {
-                //     "pitch" : 7,
-                //     "accidental" : "natural",
-                // },
-                // {
-                //     "pitch" : 11,
-                //     "accidental" : "natural",
-                // }
-            ],
-            "staccato" : false,
-            "value" : 0
-        });
-
-        return beat;
-    }
 
     export function getWidth() : number {
         return measureWidth;
@@ -94,11 +53,6 @@
 
         measureWidth = x;
     }
-
-    for(let i = 0; i != 5; i++)
-        onMount(() => appendBeat(makeBeat()));
-
-    onMount(() => setTimeout(computePositions, 2000));
 </script>
 
 <svg id={measure.measureID} height="400px" preserveAspectRatio="xMinYMid meet">
