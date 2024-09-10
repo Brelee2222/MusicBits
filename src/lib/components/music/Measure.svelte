@@ -7,13 +7,13 @@
 	import RestElement from "./RestElement.svelte";
 	import { CLEFF_MIN_HEIGHT } from "./consts";
 
-    let measure : Measure = new Measure();
-
     let beatElements : BeatElement[] = [];
 
-    let measureID : string = "measure1";
+    let measureWidth : number = 0;
 
-    function makeBeat() : Beat {
+    export let measure : Measure;
+
+    export function makeBeat() : Beat {
         const beat = NoteBeat.makeBeat(restTypes.MinmRest, {
             "dotted" : false,
             "notes" : [
@@ -53,8 +53,11 @@
         return beat;
     }
 
-    function appendBeat() {
-        const beat = makeBeat();
+    export function getWidth() : number {
+        return measureWidth;
+    }
+
+    export function appendBeat(beat : Beat) {
         const options = {
             props : {
                 beat
@@ -74,7 +77,7 @@
         beatElements[measure.beats.push(beat) - 1] = beatElement;
     }
 
-    function computePositions() {
+    export function computePositions() {
         let x = 0;
 
         for(let beatIndex = 0; beatIndex < beatElements.length; beatIndex++) {
@@ -85,18 +88,20 @@
             x += beat.width! + beat.rightPadding!;
         }
 
-        const measureElement = document.querySelector(`#${measureID}`) as SVGElement;
+        const measureElement = document.querySelector(`#${measure.measureID}`) as SVGElement;
         measureElement.setAttribute("width", `${x}`);
         measureElement.setAttribute("viewBox", `0 -200 ${x} 400`);
+
+        measureWidth = x;
     }
 
     for(let i = 0; i != 5; i++)
-        onMount(appendBeat);
+        onMount(() => appendBeat(makeBeat()));
 
     onMount(() => setTimeout(computePositions, 2000));
 </script>
 
-<svg id={measureID} height="400px" preserveAspectRatio="xMinYMid meet">
+<svg id={measure.measureID} height="400px" preserveAspectRatio="xMinYMid meet">
     <pattern id="staffsPattern" y="10" width="20" height="20" patternUnits="userSpaceOnUse">
         <line x1="0" y1="0.5" x2="1000" y2="0.5" stroke="black" stroke-width="1"/>
     </pattern>
