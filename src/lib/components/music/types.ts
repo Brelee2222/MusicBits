@@ -1,4 +1,6 @@
-import NoteStem from "./NoteStemElement.svelte"
+// @ts-ignore
+import NoteStem from "./NoteStemElement.svelte";
+// @ts-ignore
 import RestElement from "./RestElement.svelte";
 
 export type SymbolData = {
