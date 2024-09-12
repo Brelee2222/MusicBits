@@ -10,6 +10,8 @@
 
     let measureWidth : number = 0;
 
+    export let xOffset : number;
+
     export let measure : Measure;
 
     export function getWidth() : number {
@@ -55,7 +57,9 @@
     }
 </script>
 
-<svg id={measure.measureID} height="400px" preserveAspectRatio="xMinYMid meet">
+<svelte:options accessors={true}/>
+
+<g id={measure.measureID} transform="translate({xOffset} 0)" height="400px" preserveAspectRatio="xMinYMid meet">
     <pattern id="staffsPattern" y="10" width="20" height="20" patternUnits="userSpaceOnUse">
         <line x1="0" y1="0.5" x2="1000" y2="0.5" stroke="black" stroke-width="1"/>
     </pattern>
@@ -63,4 +67,4 @@
     <rect id="staff" y="-100" width="100%" height="{CLEFF_MIN_HEIGHT}" fill="url(#staffsPattern)"/>
 
     <g id="beats"/>
-</svg>
+</g>

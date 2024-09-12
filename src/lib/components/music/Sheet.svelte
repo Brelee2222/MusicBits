@@ -1,5 +1,8 @@
 <script lang="ts">
-	import Measure from "./Measure.svelte";
+	import MeasureElement from "./MeasureElement.svelte";
+	import { Measure } from "$lib/scripts/music/sheet/Measure";
+
+	const testMeasure = new Measure();
 </script>
 
-<Measure/>
+<MeasureElement measure={testMeasure} xOffset={0}/>
