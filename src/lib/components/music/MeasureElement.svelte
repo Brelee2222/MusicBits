@@ -4,10 +4,13 @@
 	import type { BeatElement } from "./types";
 	import NoteStemElement from "./NoteStemElement.svelte";
 	import RestElement from "./RestElement.svelte";
+	import { CLEFF_MIN_HEIGHT, HALF_STAFF_SIZE, MEASURE_ELEMENT_START_MARGIN } from "./consts";
 
     let beatElements : BeatElement[] = [];
 
     let measureWidth : number = 0;
+
+    let startMargin : number = MEASURE_ELEMENT_START_MARGIN;
 
     export let minY : number = 0;
 
@@ -42,7 +45,7 @@
     }
 
     export function computePositions() {
-        let x = 0;
+        let x = startMargin;
 
         for(let beatIndex = 0; beatIndex < beatElements.length; beatIndex++) {
             const beat = beatElements[beatIndex];
@@ -53,8 +56,12 @@
         }
 
         const measureElement = document.querySelector(`#${measure.measureID}`) as SVGElement;
+        const measureLine = document.querySelector(`#${measure.measureID} line`) as SVGLineElement;
+
         // measureElement.setAttribute("width", `${x}`);
         measureElement.setAttribute("viewBox", `0 -200 ${x} 400`);
+        measureLine.setAttribute("x1", `${x}`);
+        measureLine.setAttribute("x2", `${x}`);
 
         measureWidth = x;
     }
@@ -64,4 +71,5 @@
 
 <g id={measure.measureID} transform="translate({xOffset} 0)" preserveAspectRatio="xMinYMid meet">
     <g id="beats"/>
+    <line y1="{-HALF_STAFF_SIZE}" y2="{-CLEFF_MIN_HEIGHT + HALF_STAFF_SIZE}" stroke="black"/>
 </g>
